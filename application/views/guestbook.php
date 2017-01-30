@@ -142,7 +142,7 @@ h3,h4,h5 {
 			$date = new DateTime($entry->guestbook_created, new DateTimeZone($entry->guestbook_timezone));
 			?>
 			<div class="panel panel-default">
-				<div class="panel-heading" id="entry_<?= $entry->guestbook_id ?>"><a href="guestbook/delete?id=<?= $entry->guestbook_id ?>" class="pull-right">delete</a> <h4><?= $entry->guestbook_name ?></h4></div>
+				<div class="panel-heading" id="entry_<?= $entry->guestbook_id ?>"><a href="#" class="pull-right">delete</a> <h4><?= $entry->guestbook_name ?></h4></div>
 				<div class="panel-body">
 					<p class="date">Signed on <?= $date->format("M j, Y P") ?></p>
 					<hr>
@@ -173,7 +173,7 @@ h3,h4,h5 {
 </div>
 <script type="text/JavaScript">
 $(document).ready(function() {
-	$('.panel-heading a').on('click', function () {
+	$('.panel-heading').on('click', function () {
 		event.preventDefault();
 		if (confirm("Are you sure you want to remove this entry?")) {
 			$.ajax({url: "guestbook/remove?id=" + $(this)[0].id.substring(6)});
