@@ -1,3 +1,4 @@
+public/captcha/
 nbproject
 ._*
 .~lock.*
@@ -11,3 +12,4 @@ build
 vendor/
 composer.phar
 application/logs/
+application/tests/_ci_phpunit_test/

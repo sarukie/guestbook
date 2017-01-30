@@ -173,7 +173,7 @@ h3,h4,h5 {
 </div>
 <script type="text/JavaScript">
 $(document).ready(function() {
-	$('.panel-heading').on('click', function () {
+	$('.panel-heading a').on('click', function () {
 		event.preventDefault();
 		if (confirm("Are you sure you want to remove this entry?")) {
 			$.ajax({url: "guestbook/remove?id=" + $(this)[0].id.substring(6)});

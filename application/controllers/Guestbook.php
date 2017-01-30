@@ -31,27 +31,10 @@ class Guestbook extends CI_Controller {
 	public function index()
 	{
 		$log = new Logger('guestbook');
-		$log->pushHandler(new StreamHandler("/tmp/my.fat.log", Logger::WARNING));
+		$logname = date("Y-m-j");
+		$log->pushHandler(new StreamHandler(APPPATH . "/logs/{$logname}.log", Logger::WARNING));
 
-		$log->warning("A log test");
-
-		// if (!empty($this->input->post())) {
-		// 	// Set up the validator rules
-		// 	$guestbookValidator = Validator::key("name", Validator::stringType()->length(4, 100))
-		// 		->key("email", Validator::email())
-		// 		->key("timezone", Validator::intType())
-		// 		->key("comments", Validator::stringType());
-
-		// 	try {
-	 //    		$guestbookValidator->assert($this->input->post());
-		// 	} catch(NestedValidationException $exception) {
-		// 		$aErrors = $exception->findMessages(['name', 'email', 'comments', 'timezone']);
-		// 		print_r(array_values($aErrors));
-		// 	}
-		// 	echo "You done submitted. w00t w00t, z00t s00t.";
-		// }
-
-		$this->load->helper(["form", "captcha"]);
+		$this->load->helper(["form", "captcha", "url"]);
 		$this->load->library(["session", "form_validation"]);
 		$this->load->database();
 
@@ -76,6 +59,7 @@ class Guestbook extends CI_Controller {
 			$this->form_validation->set_rules("Comment", "Comment", "required");
 			$this->form_validation->set_rules("captcha", "Captcha", "callback_captchaCheck");
 			if ($this->form_validation->run() == false) {
+				$log->warning("Validation errors: " . validation_errors());
 				$viewData['errors'] = validation_errors("<div class=\"error\">", "</div>");
 				$this->load->view("guestbook", $viewData);
 			} else {
@@ -90,7 +74,8 @@ class Guestbook extends CI_Controller {
 					$id = $this->entry_model->insert_entry();
 				} catch (\Exception $exception) {
 					echo "I caught an exception:" . $exception->getMessage();
-
+					$log->error("Database exception: " . $exception->getMessage());
+					redirect("/");
 				}
 
 				$this->load->model("emailworkflow_model");
