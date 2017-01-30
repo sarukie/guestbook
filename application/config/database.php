@@ -74,15 +74,15 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'pgsql:host=localhost;port=5432;user=guestbook;password=test;dbname=guestbook',
+	'dsn'	=> 'host=localhost port=5432 user=guestbook password=test dbname=guestbook',
 	'hostname' => 'localhost',
 	'username' => 'guestbook',
 	'password' => 'test',
 	'database' => 'guestbook',
-	'dbdriver' => '',
+	'dbdriver' => 'postgre',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
+	'db_debug' => false,
 	'cache_on' => FALSE,
 	'cachedir' => '',
 	'char_set' => 'utf8',

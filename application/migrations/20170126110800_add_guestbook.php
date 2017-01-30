@@ -6,6 +6,7 @@ class Migration_Add_guestbook extends CI_Migration
 {
 	public function up()
 	{
+		$this->load->database();
 		$this->dbforge->add_field([
 			"guestbook_id" => [
 				"type" => "INT",
@@ -13,11 +14,7 @@ class Migration_Add_guestbook extends CI_Migration
 				"unsigned" => true,
 				"auto_increment" => true
 			],
-			"guestbook_firstname" => [
-				"type" => "VARCHAR",
-				"constraint" => 100
-			],
-			"guestbook_lastname" => [
+			"guestbook_name" => [
 				"type" => "VARCHAR",
 				"constraint" => 100
 			],
@@ -27,13 +24,24 @@ class Migration_Add_guestbook extends CI_Migration
 			],
 			"guestbook_email" => [
 				"type" => "VARCHAR",
-				"constraint" => 255
+				"constraint" => 255,
+				"unique" => true
 			],
 			"guestbook_created" => [
-				"type" => "datetime",
-				"default" => "0000-00-00 00:00:00"
+				"type" => "TIMESTAMP"
+			],
+			"guestbook_timezone" => [
+				"type" => "VARCHAR",
+				"constraint" => 128
 			]
 		]);
+
+		$this->dbforge->add_key("guestbook_id", true);
+		$this->dbforge->create_table("guestbook");
+
+		// Because there appeared to be an issue with pg_query allowing the creation of the created row with a default
+		// value, I opted to throw an alter in here.
+		$this->db->query("ALTER TABLE guestbook ALTER guestbook_created SET DEFAULT CURRENT_TIMESTAMP;");
 	}
 
 
