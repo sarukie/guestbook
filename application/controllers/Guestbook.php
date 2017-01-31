@@ -65,10 +65,10 @@ class Guestbook extends CI_Controller {
 			} else {
 				// Clear the cache completely.
 				$this->clearCacheKey();
-				$this->entry_model->setName($this->input->post('Name'));
-				$this->entry_model->setEmail($this->input->post('Email'));
+				$this->entry_model->setName(strip_tags($this->input->post('Name')));
+				$this->entry_model->setEmail(strip_tags($this->input->post('Email')));
 				$this->entry_model->setTimezone($this->input->post('Timezone'));
-				$this->entry_model->setComment($this->input->post('Comment'));
+				$this->entry_model->setComment(strip_tags($this->input->post('Comment')));
 
 				try {
 					$id = $this->entry_model->insert_entry();

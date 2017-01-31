@@ -142,12 +142,12 @@ h3,h4,h5 {
 			$date = new DateTime($entry->guestbook_created, new DateTimeZone($entry->guestbook_timezone));
 			?>
 			<div class="panel panel-default">
-				<div class="panel-heading" id="entry_<?= $entry->guestbook_id ?>"><a href="#" class="pull-right">delete</a> <h4><?= $entry->guestbook_name ?></h4></div>
+				<div class="panel-heading" id="entry_<?= $entry->guestbook_id ?>"><a href="#" class="pull-right">delete</a> <h4><?= strip_tags($entry->guestbook_name) ?></h4></div>
 				<div class="panel-body">
 					<p class="date">Signed on <?= $date->format("M j, Y P") ?></p>
 					<hr>
 					<div class="comment">
-						<?= $entry->guestbook_comment ?>
+						<?= strip_tags($entry->guestbook_comment) ?>
 					</div>
 				</div>
 			</div>
